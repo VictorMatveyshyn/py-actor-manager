@@ -10,6 +10,10 @@ class ActorManager:
         self.table_name = table_name
         self._connection = sqlite3.connect(self.db_name)
         self.cursor = self._connection.cursor()
+        self.cursor.execute(f'CREATE TABLE {self.table_name} '
+                            f'( id INTEGER PRIMARY KEY, '
+                            f'first_name TEXT NOT NULL, '
+                            f'second_name TEXT NOT NULL, ) ')
 
     def create(self,first_name: str, last_name: str):
         actor_cursor = self._connection.cursor()
@@ -39,5 +43,6 @@ class ActorManager:
                              (first_name, last_name))
         self._connection.commit()
 
-# mngr = ActorManager('actor.db', 'actor.sqlite3')
+# mngr = ActorManager('app/actor.db', 'actor.sqlite3')
+# mngr.create('first_name', 'last_name')
 # print(mngr.all())
