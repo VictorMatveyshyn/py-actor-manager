@@ -3,7 +3,6 @@ import sqlite3
 from app.models import Actor
 
 
-
 class ActorManager:
     def __init__(self, db_name: str, table_name: str):
         self.db_name = db_name
@@ -24,19 +23,11 @@ class ActorManager:
                              )
         self._connection.commit()
 
-
     def all(self):
         actor_cursor = self._connection.cursor()
         actor_cursor.execute(f'SELECT * FROM {self.table_name}')
-        return actor_cursor.fetchall()
-
-    # def update(self, pk: int, first_name: str, last_name: str):
-    #     actor_cursor = self._connection.cursor()
-    #     actor_cursor.execute(f'UPDATE {self.table_name} '
-    #                          f'SET first_mane = (?), last_name = (?) '
-    #                          f' WHERE id = (?)',
-    #                          (first_name, last_name, pk))
-    #     self._connection.commit()
+        rows = actor_cursor.fetchall()
+        return [Actor(id=row[0], first_name=row[1], last_name=row[2]) for row in rows]
 
     def update(self, pk: int, new_first_name: str, new_last_name: str):
         actor_cursor = self._connection.cursor()
@@ -53,6 +44,13 @@ class ActorManager:
                              )
         self._connection.commit()
 
-mngr = ActorManager('actor.db', 'actor.sqlite3')
-mngr.create('first_name', 'last_name')
-print(mngr.all())
+if __name__ == '__main__':
+    mngr = ActorManager('actor.db', 'actor')
+    # mngr.create('Рфккн', 'Екгьфт')
+    # mngr.create('Bruce', 'Willis')
+    # mngr.create('John', 'Travolta')
+    # mngr.create('John', 'Lennon')
+    mngr.delete(2)
+    actor_list = mngr.all()
+    for actor in actor_list:
+        print(actor)
