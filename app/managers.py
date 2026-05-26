@@ -1,5 +1,6 @@
 import sqlite3
 
+
 from app.models import Actor
 
 
@@ -15,7 +16,7 @@ class ActorManager:
                             f"last_name TEXT NOT NULL ) ")
         self._connection.commit()
 
-    def create(self,first_name: str, last_name: str) -> None:
+    def create(self, first_name: str, last_name: str) -> None:
         actor_cursor = self._connection.cursor()
         actor_cursor.execute(f"INSERT INTO {self.table_name} "
                              f"(first_name, last_name) VALUES (?, ?)",
