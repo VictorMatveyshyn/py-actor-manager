@@ -4,7 +4,7 @@ from app.models import Actor
 
 
 class ActorManager:
-    def __init__(self, db_name: str, table_name: str):
+    def __init__(self, db_name: str, table_name: str = "actors"):
         self.db_name = db_name
         self.table_name = table_name
         self._connection = sqlite3.connect(self.db_name)
@@ -44,13 +44,4 @@ class ActorManager:
                              )
         self._connection.commit()
 
-if __name__ == '__main__':
-    mngr = ActorManager('actor.db', 'actor')
-    # mngr.create('Рфккн', 'Екгьфт')
-    # mngr.create('Bruce', 'Willis')
-    # mngr.create('John', 'Travolta')
-    # mngr.create('John', 'Lennon')
-    mngr.delete(2)
-    actor_list = mngr.all()
-    for actor in actor_list:
-        print(actor)
+
